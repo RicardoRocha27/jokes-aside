@@ -2,8 +2,11 @@ import { Urbanist } from "next/font/google";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { ModalProvider } from "@/providers/modal-provider";
+import { ToastProvider } from "@/providers/toast-provider";
+
+import "./globals.css";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -21,6 +24,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={urbanist.className}>
+          <ModalProvider />
+          <ToastProvider />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>
