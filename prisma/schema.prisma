@@ -9,11 +9,12 @@ datasource db {
 }
 
 model Profile {
-  id       String @id @default(uuid())
-  userId   String @unique
-  username String
-  email    String @db.Text
-  imageUrl String @db.Text
+  id       String  @id @default(uuid())
+  userId   String  @unique
+  name     String
+  username String?
+  email    String  @db.Text
+  imageUrl String  @db.Text
 
   createdPosts Post[] @relation("createdPosts")
   likedPosts   Post[] @relation("likedPosts")
