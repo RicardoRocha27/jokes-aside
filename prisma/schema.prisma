@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Profile {
+  id       String @id @default(uuid())
+  userId   String @unique
+  username String
+  email    String @db.Text
+  imageUrl String @db.Text
+
+  createdPosts Post[] @relation("createdPosts")
+  likedPosts   Post[] @relation("likedPosts")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id          String    @id @default(uuid())
+  title       String
+  description String    @db.Text
+  tag         String
+  likes       Profile[] @relation("likedPosts")
+
+  profileId String
+  profile   Profile @relation("createdPosts", fields: [profileId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+}
