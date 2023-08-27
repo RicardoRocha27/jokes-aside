@@ -17,18 +17,18 @@ model Profile {
   imageUrl String  @db.Text
 
   createdPosts Post[] @relation("createdPosts")
-  likedPosts   Post[] @relation("likedPosts")
+  likedPosts   Like[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Post {
-  id          String    @id @default(uuid())
+  id          String @id @default(uuid())
   title       String
-  description String    @db.Text
+  description String @db.Text
   tag         String
-  likes       Profile[] @relation("likedPosts")
+  likes       Like[]
 
   profileId String
   profile   Profile @relation("createdPosts", fields: [profileId], references: [id])
@@ -37,4 +37,17 @@ model Post {
   updatedAt DateTime @updatedAt
 
   @@index([profileId])
+}
+
+model Like {
+  id        String  @id @default(uuid())
+  profileId String
+  Profile   Profile @relation(fields: [profileId], references: [id])
+  postId    String
+  Post      Post    @relation(fields: [postId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([profileId])
+  @@index([postId])
 }
