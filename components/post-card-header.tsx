@@ -16,7 +16,7 @@ const PostCardHeader: React.FC<PostCardHeaderProps> = ({ profile, time }) => {
 
   return (
     <CardHeader
-      onClick={() => router.push(`/user/${profile.id}`)}
+      onClick={() => router.push(`/profile/${profile.id}/created-posts`)}
       className="flex flex-row items-center justify-between space-y-0 pb-2 gap-x-5"
     >
       <CardTitle className="text-md font-medium flex items-center gap-x-2 cursor-pointer">

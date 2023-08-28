@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.2",
+    "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.3.0",
     "@prisma/client": "^5.2.0",
     "@radix-ui/react-dialog": "^1.0.4",

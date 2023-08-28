@@ -17,7 +17,7 @@ const PostList: React.FC<PostListProps> = async ({ initialData }) => {
     }));
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-10">
       {posts.map((post) => (
         <PostCard
           key={post.id}
