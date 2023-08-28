@@ -21,39 +21,48 @@ const HeartButton: React.FC<HeartButtonProps> = ({
 }) => {
   const [hasLiked, setHasLiked] = useState(like !== undefined);
   const [postLikes, setPostLikes] = useState(likes);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLike = async () => {
     try {
+      setIsLoading(true);
+
       await axios.post(`/api/likes`, { profileId, postId });
 
       setHasLiked(true);
       setPostLikes(postLikes + 1);
     } catch (error) {
       toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleUnlike = async () => {
     try {
+      setIsLoading(true);
+
       await axios.delete(`/api/likes/${like?.id}`);
 
       setHasLiked(false);
       setPostLikes(postLikes - 1);
     } catch (error) {
       toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="cursor-pointer flex flex-row items-center gap-x-2">
+    <div className="flex flex-row items-center gap-x-2">
       {hasLiked ? (
-        <div onClick={handleUnlike}>
+        <button onClick={handleUnlike} disabled={isLoading}>
           <AiFillHeart />
-        </div>
+        </button>
       ) : (
-        <div onClick={handleLike}>
+        <button onClick={handleLike} disabled={isLoading}>
           <AiOutlineHeart />
-        </div>
+        </button>
       )}
       <p className="text-xs">{`${postLikes} ${
         postLikes === 1 ? "laugh" : "laughs"
