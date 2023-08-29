@@ -1,7 +1,6 @@
 "use client";
 
 import { useCommentModal } from "@/hooks/use-comment-modal";
-import { Comment } from "@prisma/client";
 import { MessageCircle } from "lucide-react";
 
 interface CommentButtonProps {

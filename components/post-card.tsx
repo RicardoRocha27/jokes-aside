@@ -70,14 +70,21 @@ const PostCard: React.FC<PostCardProps> = async ({
             />
           </div>
         </div>
-        <PostComments comments={comments} />
+        <PostComments
+          post={post}
+          comments={comments}
+          loggedUserId={loggedUser.id}
+          loggedUser={loggedUser}
+        />
         <div className="max-h-14 mt-3 overflow-hidden w-full">
           {comments[0] !== undefined && (
             <Comment
               onCard
+              post={post}
               //@ts-ignore
               profile={comments[0].profile}
               comment={comments[0]}
+              loggedUser={loggedUser}
             />
           )}
         </div>

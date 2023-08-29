@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -35,15 +36,16 @@ const formSchema = z.object({
 export const PostModal = () => {
   const postModal = usePostModal();
 
-  console.log(postModal.initialData?.title);
+  useEffect(() => {
+    if (postModal.initialData) {
+      form.reset(postModal.initialData);
+    } else {
+      form.reset({ title: "", description: "", tag: "" });
+    }
+  }, [postModal.initialData]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: postModal.initialData?.title,
-      description: "",
-      tag: "",
-    },
   });
 
   const isLoading = form.formState.isSubmitting;

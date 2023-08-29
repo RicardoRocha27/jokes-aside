@@ -1,15 +1,23 @@
 "use client";
 
-import { Comment } from "@prisma/client";
+import { Comment, Post } from "@prisma/client";
 import { cn } from "@/lib/utils";
 
 import { usePostCommentsModal } from "@/hooks/use-post-comments-modal";
 
 interface PostCommentsProps {
+  post: Post;
   comments: Comment[];
+  loggedUserId: string;
+  loggedUser: any;
 }
 
-const PostComments: React.FC<PostCommentsProps> = ({ comments }) => {
+const PostComments: React.FC<PostCommentsProps> = ({
+  post,
+  comments,
+  loggedUserId,
+  loggedUser,
+}) => {
   const postCommentsModal = usePostCommentsModal();
 
   return (
@@ -18,7 +26,7 @@ const PostComments: React.FC<PostCommentsProps> = ({ comments }) => {
         <p
           className="text-xs text-muted-foreground"
           onClick={() => {
-            postCommentsModal.onOpen(comments);
+            postCommentsModal.onOpen(comments, post, loggedUserId, loggedUser);
           }}
         >
           Check all comments
