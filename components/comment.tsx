@@ -13,7 +13,7 @@ const Comment: React.FC<CommentProps> = ({ profile, comment }) => {
 
   return (
     <>
-      <div className="text-md font-medium flex justify-between items-center gap-x-2 cursor-pointer">
+      <div className="text-md font-medium flex justify-between items-center gap-x-2">
         <div className="flex items-center gap-x-2">
           <Image
             src={profile.imageUrl}
