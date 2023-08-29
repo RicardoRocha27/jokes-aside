@@ -1,24 +1,14 @@
+import { getPosts } from "@/actions/get-posts";
 import PostList from "@/components/post-list";
-import { db } from "@/lib/db";
 
 const CreatedPostsPage = async ({
   params,
 }: {
   params: { profileId: string };
 }) => {
-  const posts = await db.post.findMany({
-    where: {
-      profileId: params.profileId,
-    },
-    include: {
-      profile: true,
-      likes: true,
-      comments: {
-        include: {
-          profile: true,
-        },
-      },
-    },
+  const posts = await getPosts({
+    createdPosts: true,
+    profileId: params.profileId,
   });
 
   return (

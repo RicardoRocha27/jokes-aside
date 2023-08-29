@@ -1,6 +1,6 @@
-import { db } from "@/lib/db";
 import PostCard from "@/components/post-card";
 import { Post } from "@prisma/client";
+import { getPosts } from "@/actions/get-posts";
 
 interface PostListProps {
   initialData?: Post[];
@@ -8,25 +8,7 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = async ({ initialData, canEdit }) => {
-  const posts =
-    initialData ||
-    (await db.post.findMany({
-      include: {
-        profile: true,
-        likes: true,
-        comments: {
-          include: {
-            profile: true,
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    }));
+  const posts = initialData || (await getPosts({}));
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-10">

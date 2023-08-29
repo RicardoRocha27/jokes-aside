@@ -35,19 +35,15 @@ const formSchema = z.object({
 export const PostModal = () => {
   const postModal = usePostModal();
 
+  console.log(postModal.initialData?.title);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: postModal.initialData
-      ? {
-          title: postModal.initialData.title,
-          description: postModal.initialData.description,
-          tag: postModal.initialData.tag,
-        }
-      : {
-          title: "",
-          description: "",
-          tag: "",
-        },
+    defaultValues: {
+      title: postModal.initialData?.title,
+      description: "",
+      tag: "",
+    },
   });
 
   const isLoading = form.formState.isSubmitting;

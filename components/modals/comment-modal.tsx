@@ -51,7 +51,7 @@ const CommentModal = () => {
       commentModal.onClose();
       toast.success("Comment added.");
 
-      router.refresh();
+      window.location.assign("/home");
     } catch (error) {
       toast.error("Something went wrong.");
     }
