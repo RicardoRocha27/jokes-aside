@@ -1,13 +1,15 @@
+import { Post } from "@prisma/client";
 import { create } from "zustand";
 
 interface UsePostModalStore {
   isOpen: boolean;
-  onOpen: () => void;
+  initialData?: Post;
+  onOpen: (post?: Post) => void;
   onClose: () => void;
 }
 
 export const usePostModal = create<UsePostModalStore>((set) => ({
   isOpen: false,
-  onOpen: () => set({ isOpen: true }),
+  onOpen: (post) => set({ isOpen: true, initialData: post }),
   onClose: () => set({ isOpen: false }),
 }));

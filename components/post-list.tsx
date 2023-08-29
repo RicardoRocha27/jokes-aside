@@ -4,15 +4,27 @@ import { Post } from "@prisma/client";
 
 interface PostListProps {
   initialData?: Post[];
+  canEdit?: boolean;
 }
 
-const PostList: React.FC<PostListProps> = async ({ initialData }) => {
+const PostList: React.FC<PostListProps> = async ({ initialData, canEdit }) => {
   const posts =
     initialData ||
     (await db.post.findMany({
       include: {
         profile: true,
         likes: true,
+        comments: {
+          include: {
+            profile: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     }));
 
@@ -26,6 +38,9 @@ const PostList: React.FC<PostListProps> = async ({ initialData }) => {
           profile={post.profile}
           //@ts-ignore
           likes={post.likes}
+          //@ts-ignore
+          comments={post.comments}
+          canEdit={canEdit}
         />
       ))}
     </div>

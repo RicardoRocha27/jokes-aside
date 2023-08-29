@@ -4,6 +4,7 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 import { usePostModal } from "@/hooks/use-post-modal";
 import { Modal } from "@/components/ui/modal";
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast } from "react-hot-toast";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -36,23 +37,40 @@ export const PostModal = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      tag: "",
-    },
+    defaultValues: postModal.initialData
+      ? {
+          title: postModal.initialData.title,
+          description: postModal.initialData.description,
+          tag: postModal.initialData.tag,
+        }
+      : {
+          title: "",
+          description: "",
+          tag: "",
+        },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/posts", values);
+      if (postModal.initialData) {
+        await axios.patch(`/api/posts/${postModal.initialData.id}`, values);
 
-      postModal.onClose();
-      toast.success("Post created.");
+        postModal.onClose();
+        toast.success("Post edited.");
 
-      window.location.assign("/home");
+        window.location.assign(
+          `/profile/${postModal.initialData.profileId}/created-posts`
+        );
+      } else {
+        await axios.post("/api/posts", values);
+
+        postModal.onClose();
+        toast.success("Post created.");
+
+        window.location.assign("/home");
+      }
     } catch (error) {
       toast.error("Something went wrong.");
     }
@@ -60,8 +78,12 @@ export const PostModal = () => {
 
   return (
     <Modal
-      title="Create Post"
-      description="Add a new post to make others laugh"
+      title={postModal.initialData ? "Edit Post" : "Create Post"}
+      description={
+        postModal.initialData
+          ? "Refine your post for impact"
+          : "Add a new post to make others laugh"
+      }
       isOpen={postModal.isOpen}
       onClose={postModal.onClose}
     >
@@ -96,7 +118,7 @@ export const PostModal = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Input
+                      <Textarea
                         disabled={isLoading}
                         placeholder="Post description"
                         {...field}

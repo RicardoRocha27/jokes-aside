@@ -16,22 +16,24 @@ model Profile {
   email    String  @db.Text
   imageUrl String  @db.Text
 
-  createdPosts Post[] @relation("createdPosts")
+  createdPosts Post[]    @relation("createdPosts")
   likedPosts   Like[]
+  comments     Comment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Post {
-  id          String @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
-  description String @db.Text
+  description String    @db.Text
   tag         String
   likes       Like[]
+  comments    Comment[]
 
   profileId String
-  profile   Profile @relation("createdPosts", fields: [profileId], references: [id])
+  profile   Profile @relation("createdPosts", fields: [profileId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -42,9 +44,23 @@ model Post {
 model Like {
   id        String  @id @default(uuid())
   profileId String
-  Profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   postId    String
-  Post      Post    @relation(fields: [postId], references: [id])
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([profileId])
+  @@index([postId])
+}
+
+model Comment {
+  id        String  @id @default(uuid())
+  text      String  @db.Text
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 

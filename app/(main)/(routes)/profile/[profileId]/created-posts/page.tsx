@@ -13,12 +13,17 @@ const CreatedPostsPage = async ({
     include: {
       profile: true,
       likes: true,
+      comments: {
+        include: {
+          profile: true,
+        },
+      },
     },
   });
 
   return (
     <>
-      <PostList initialData={posts} />
+      <PostList initialData={posts} canEdit />
     </>
   );
 };

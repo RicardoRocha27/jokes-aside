@@ -17,6 +17,11 @@ const LikedPostsPage = async ({
     include: {
       profile: true,
       likes: true,
+      comments: {
+        include: {
+          profile: true,
+        },
+      },
     },
   });
 

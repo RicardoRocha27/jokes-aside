@@ -1,20 +1,31 @@
 import { formatDistanceToNow } from "date-fns";
-import { Like, Post, Profile } from "@prisma/client";
-
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import PostCardHeader from "./post-card-header";
-import HeartButton from "./heart-button";
+import { Comment, Like, Post, Profile } from "@prisma/client";
 import { currentProfile } from "@/lib/current-profile";
 import { redirectToSignIn } from "@clerk/nextjs";
+
+import PostCardHeader from "@/components/post-card-header";
+import PostEdit from "@/components/post-edit";
+import HeartButton from "@/components/heart-button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import CommentButton from "@/components/comment-button";
+import PostComments from "@/components/post-comments";
 
 interface PostCardProps {
   post: Post;
   profile: Profile;
   likes: Like[];
+  comments: Comment[];
+  canEdit?: boolean;
 }
 
-const PostCard: React.FC<PostCardProps> = async ({ post, profile, likes }) => {
+const PostCard: React.FC<PostCardProps> = async ({
+  post,
+  profile,
+  likes,
+  comments,
+  canEdit,
+}) => {
   const time = formatDistanceToNow(post.createdAt, { addSuffix: true });
 
   const loggedUser = await currentProfile();
@@ -24,6 +35,8 @@ const PostCard: React.FC<PostCardProps> = async ({ post, profile, likes }) => {
   }
 
   const like = likes.find((like) => like.profileId === loggedUser.id);
+
+  const isUserPost = loggedUser.id === profile.id;
 
   return (
     <Card>
@@ -35,19 +48,30 @@ const PostCard: React.FC<PostCardProps> = async ({ post, profile, likes }) => {
           <p className="text-sm">{post.description}</p>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between items-center">
-        <div className="flex">
-          <p className="text-xs tracking-wide font-semibold bg-gradient-to-r from-pink-800 via-cyan-700 to-pink-800 bg-clip-text text-transparent">
-            #{post.tag}
-          </p>
+      <CardFooter className="flex flex-col">
+        <div className="w-full flex justify-between items-center">
+          <div className="flex">
+            <p className="text-xs tracking-wide font-semibold bg-gradient-to-r from-pink-800 via-cyan-700 to-pink-800 bg-clip-text text-transparent">
+              #{post.tag}
+            </p>
+          </div>
+          <div className="flex gap-x-3">
+            <CommentButton
+              comments={comments?.length}
+              postId={post.id}
+              profileId={loggedUser.id}
+            />
+            <HeartButton
+              profileId={loggedUser.id}
+              postId={post.id}
+              likes={likes.length}
+              like={like}
+            />
+          </div>
         </div>
-        <HeartButton
-          profileId={loggedUser.id}
-          postId={post.id}
-          likes={likes.length}
-          like={like}
-        />
+        <PostComments comments={comments} />
       </CardFooter>
+      {canEdit && isUserPost && <PostEdit post={post} />}
     </Card>
   );
 };
