@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import { Like } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface HeartButtonProps {
   profileId: string;
@@ -22,6 +23,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   const [hasLiked, setHasLiked] = useState(like !== undefined);
   const [postLikes, setPostLikes] = useState(likes);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleLike = async () => {
     try {
@@ -31,6 +33,8 @@ const HeartButton: React.FC<HeartButtonProps> = ({
 
       setHasLiked(true);
       setPostLikes(postLikes + 1);
+
+      router.refresh();
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
@@ -46,6 +50,8 @@ const HeartButton: React.FC<HeartButtonProps> = ({
 
       setHasLiked(false);
       setPostLikes(postLikes - 1);
+
+      router.refresh();
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
