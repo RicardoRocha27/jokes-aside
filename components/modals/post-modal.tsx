@@ -133,11 +133,19 @@ export const PostModal = () => {
                   <FormItem>
                     <FormLabel>Tag</FormLabel>
                     <FormControl>
-                      <Input
-                        disabled={isLoading}
-                        placeholder="#post-tag"
-                        {...field}
-                      />
+                      <div>
+                        <div className="flex">
+                          <h1 className="absolute h-10 flex items-center px-3 text-sm font-semibold">
+                            #
+                          </h1>
+                        </div>
+                        <Input
+                          className="px-6"
+                          disabled={isLoading}
+                          placeholder="post-tag"
+                          {...field}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
