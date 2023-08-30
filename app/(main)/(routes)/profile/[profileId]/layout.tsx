@@ -1,11 +1,12 @@
-import { Heading } from "@/components/ui/heading";
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
+import { Heart, MessageSquare, PencilRuler } from "lucide-react";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { db } from "@/lib/db";
+import { currentProfile } from "@/lib/current-profile";
+
+import { Heading } from "@/components/ui/heading";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import ProfileTab from "./components/profile-tab";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, MessageSquare, PencilRuler } from "lucide-react";
 
 const ProfileLayout = async ({
   children,

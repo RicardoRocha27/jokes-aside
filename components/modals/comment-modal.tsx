@@ -1,6 +1,9 @@
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCommentModal } from "@/hooks/use-comment-modal";
 import { Modal } from "@/components/ui/modal";
@@ -14,9 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   text: z.string().min(1, {

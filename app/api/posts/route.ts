@@ -1,7 +1,7 @@
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
+import { db } from "@/lib/db";
+import { currentProfile } from "@/lib/current-profile";
 
 export async function POST(req: Request) {
   try {

@@ -1,7 +1,8 @@
 "use client";
 
-import { useCommentModal } from "@/hooks/use-comment-modal";
 import { MessageCircle } from "lucide-react";
+
+import { useCommentModal } from "@/hooks/use-comment-modal";
 
 interface CommentButtonProps {
   comments: number;

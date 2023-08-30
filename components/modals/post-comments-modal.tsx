@@ -1,16 +1,17 @@
-import { usePostCommentsModal } from "@/hooks/use-post-comments-modal";
-import { Modal } from "@/components/ui/modal";
-import Comment from "@/components/comment";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import * as z from "zod";
+import axios from "axios";
+import Image from "next/image";
+import { toast } from "react-hot-toast";
+import { Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import { Send } from "lucide-react";
-import axios from "axios";
-import { toast } from "react-hot-toast";
+
+import { usePostCommentsModal } from "@/hooks/use-post-comments-modal";
+import Comment from "@/components/comment";
+import { Modal } from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
 const formSchema = z.object({
   text: z.string().min(1),

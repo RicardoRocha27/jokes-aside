@@ -1,5 +1,7 @@
-import { DataTable } from "@/components/ui/data-table";
 import { ProfileWithTotalLikes } from "@/types";
+
+import { DataTable } from "@/components/ui/data-table";
+
 import { columns } from "./columns";
 
 interface TablesProps {

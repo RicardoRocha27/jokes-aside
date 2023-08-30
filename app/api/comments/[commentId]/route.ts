@@ -1,7 +1,7 @@
+import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,

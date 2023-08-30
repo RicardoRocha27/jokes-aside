@@ -1,6 +1,5 @@
 import { getPosts } from "@/actions/get-posts";
 import PostList from "@/components/post-list";
-import { db } from "@/lib/db";
 
 const LikedPostsPage = async ({
   params,

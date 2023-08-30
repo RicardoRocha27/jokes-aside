@@ -1,4 +1,5 @@
 import { ProfileWithTotalLikes } from "@/types";
+
 import PodiumCard from "./podium-card";
 
 interface PodiumProps {

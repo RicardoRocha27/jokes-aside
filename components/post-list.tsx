@@ -1,5 +1,6 @@
-import PostCard from "@/components/post-card";
 import { Post } from "@prisma/client";
+
+import PostCard from "@/components/post-card";
 import { getPosts } from "@/actions/get-posts";
 
 interface PostListProps {

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Profile } from "@prisma/client";
 import { usePathname } from "next/navigation";
+import { Profile } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 

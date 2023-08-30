@@ -2,9 +2,10 @@
 
 import * as z from "zod";
 import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { usePostModal } from "@/hooks/use-post-modal";
 import { Modal } from "@/components/ui/modal";
@@ -19,7 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useEffect } from "react";
 
 const formSchema = z.object({
   title: z.string().min(1, {

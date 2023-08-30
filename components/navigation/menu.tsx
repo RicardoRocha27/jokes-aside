@@ -1,14 +1,14 @@
 "use client";
 
-import { UserButton, UserProfile } from "@clerk/nextjs";
-import { Profile } from "@prisma/client";
-
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { usePostModal } from "@/hooks/use-post-modal";
 import Link from "next/link";
 import { Trophy, User2 } from "lucide-react";
-import MobileMenu from "./mobile-menu";
+import { UserButton } from "@clerk/nextjs";
+import { Profile } from "@prisma/client";
+
+import MobileMenu from "@/components/navigation/mobile-menu";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import { usePostModal } from "@/hooks/use-post-modal";
 
 interface MenuProps {
   loggedUser: Profile;

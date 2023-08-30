@@ -1,5 +1,5 @@
-import { Comment, Post, Profile } from "@prisma/client";
 import { create } from "zustand";
+import { Comment, Post, Profile } from "@prisma/client";
 
 interface UsePostCommentsModalStore {
   isOpen: boolean;

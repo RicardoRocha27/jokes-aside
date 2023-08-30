@@ -1,5 +1,5 @@
-import { Post } from "@prisma/client";
 import { create } from "zustand";
+import { Post } from "@prisma/client";
 
 interface UsePostModalStore {
   isOpen: boolean;

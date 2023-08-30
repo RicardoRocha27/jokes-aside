@@ -1,10 +1,10 @@
 "use client";
 
-import { Like } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { toast } from "react-hot-toast";
+import { Like } from "@prisma/client";
 
 interface HeartButtonProps {
   profileId: string;

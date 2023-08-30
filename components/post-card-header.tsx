@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Profile } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { Profile } from "@prisma/client";
 
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 

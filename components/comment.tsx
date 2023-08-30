@@ -1,15 +1,16 @@
 "use client";
 
-import { Comment, Post, Profile } from "@prisma/client";
-import { formatDistanceToNow } from "date-fns";
-import Image from "next/image";
-import { Separator } from "./ui/separator";
-import { cn } from "@/lib/utils";
-import { Trash } from "lucide-react";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
 import axios from "axios";
-import { AlertModal } from "./modals/alert-modal";
+import Image from "next/image";
+import { useState } from "react";
+import { Trash } from "lucide-react";
+import { toast } from "react-hot-toast";
+import { formatDistanceToNow } from "date-fns";
+import { Comment, Post, Profile } from "@prisma/client";
+import { cn } from "@/lib/utils";
+
+import { AlertModal } from "@/components/modals/alert-modal";
+import { Separator } from "@/components/ui/separator";
 
 interface CommentProps {
   onCard?: boolean;

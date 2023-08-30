@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
-import { Comment as CommentType, Like, Post, Profile } from "@prisma/client";
-import { currentProfile } from "@/lib/current-profile";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { currentProfile } from "@/lib/current-profile";
+import { Comment as CommentType, Like, Post, Profile } from "@prisma/client";
 
 import PostCardHeader from "@/components/post-card-header";
 import PostEdit from "@/components/post-edit";
@@ -10,7 +10,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import CommentButton from "@/components/comment-button";
 import PostComments from "@/components/post-comments";
-import Comment from "./comment";
+import Comment from "@/components/comment";
 
 interface PostCardProps {
   post: Post;

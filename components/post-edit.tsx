@@ -1,16 +1,16 @@
 "use client";
 
 import axios from "axios";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Edit, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Post } from "@prisma/client";
 
 import { CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { usePostModal } from "@/hooks/use-post-modal";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { toast } from "react-hot-toast";
+import { usePostModal } from "@/hooks/use-post-modal";
 
 interface PostEditProps {
   post: Post;
