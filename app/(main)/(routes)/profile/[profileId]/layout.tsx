@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 
 import ProfileTab from "./components/profile-tab";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Heart, MessageSquare, PenSquare } from "lucide-react";
 
 const ProfileLayout = async ({
   children,
@@ -24,6 +26,11 @@ const ProfileLayout = async ({
     where: {
       id: params.profileId,
     },
+    include: {
+      createdPosts: true,
+      likedPosts: true,
+      comments: true,
+    },
   });
 
   if (!profile) {
@@ -40,6 +47,41 @@ const ProfileLayout = async ({
             : `Take a look and explore ${profile.username}'s jokes. Just don't laugh too hard, it would be awkward`
         }
       />
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-3 mt-5">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Created Posts</CardTitle>
+            <PenSquare className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">
+              {profile.createdPosts.length}
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Liked Posts</CardTitle>
+            <Heart className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">
+              {profile.likedPosts.length}
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Commented Posts
+            </CardTitle>
+            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{profile.comments.length}</div>
+          </CardContent>
+        </Card>
+      </div>
       <ProfileTab profile={profile} />
       {children}
     </div>
