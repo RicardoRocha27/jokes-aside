@@ -29,7 +29,6 @@ const PostCardHeader: React.FC<PostCardHeaderProps> = ({ profile, time }) => {
         />
         <div className="flex flex-col overflow-hidden whitespace-pre">
           <p className="text-sm">{profile.username}</p>
-          <p className="text-xs text-muted-foreground">{profile.email}</p>
         </div>
       </CardTitle>
       <CardDescription className="text-xs">{time}</CardDescription>
