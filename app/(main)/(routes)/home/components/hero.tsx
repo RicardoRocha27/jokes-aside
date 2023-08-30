@@ -10,7 +10,7 @@ const Hero = () => {
       </h1>
       <p className="">
         Jokes Aside is an open-source joke sharing hub where everyone can share
-        their uncle's last christmas jokes and more, of course.
+        their uncle&apos;s last christmas jokes and more, of course.
       </p>
     </div>
   );
