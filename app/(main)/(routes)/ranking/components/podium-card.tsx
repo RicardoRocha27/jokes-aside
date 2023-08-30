@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { ProfileWithTotalLikes } from "@/types";
 import { Medal } from "lucide-react";
 import Image from "next/image";
@@ -11,7 +12,16 @@ interface PodiumCardProps {
 
 const PodiumCard: React.FC<PodiumCardProps> = ({ medal, profile }) => {
   return (
-    <Card className="w-full overflow-hidden">
+    <Card
+      className={cn(
+        "w-full overflow-hidden relative mt-0 sm:mt-auto",
+        medal === "gold"
+          ? "sm:h-64"
+          : medal === "silver"
+          ? "sm:h-60"
+          : "sm:h-56"
+      )}
+    >
       <CardHeader>
         <CardTitle>
           <Link
@@ -21,15 +31,15 @@ const PodiumCard: React.FC<PodiumCardProps> = ({ medal, profile }) => {
             <Image
               src={profile.imageUrl}
               alt=""
-              width={40}
-              height={40}
+              width={50}
+              height={50}
               className="rounded-full"
             />
             <p className="text-lg  break-all text-center">{profile.username}</p>
             <p className="text-sm">
               {profile.totalLikes} {profile.totalLikes === 1 ? "like" : "likes"}
             </p>
-            <Medal color={medal} />
+            <Medal color={medal} size={30} />
             <p className="text-xs text-muted-foreground">
               {medal === "gold" ? "1st " : medal === "silver" ? "2nd " : "3rd "}
               Place
