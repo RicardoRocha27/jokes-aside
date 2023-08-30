@@ -36,7 +36,7 @@ const PodiumCard: React.FC<PodiumCardProps> = ({ medal, profile }) => {
               height={50}
               className="rounded-full"
             />
-            <p className="text-lg  break-all text-center">{profile.username}</p>
+            <p className="text-lg break-all text-center">{profile.username}</p>
             <p className="text-sm">
               {profile.totalLikes} {profile.totalLikes === 1 ? "like" : "likes"}
             </p>

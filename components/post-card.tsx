@@ -51,12 +51,12 @@ const PostCard: React.FC<PostCardProps> = async ({
       </CardContent>
       <CardFooter className="flex flex-col">
         <div className="w-full flex justify-between items-center">
-          <div className="flex">
+          <div className="flex break-all w-2/3">
             <p className="text-xs tracking-wide font-semibold bg-gradient-to-r from-pink-800 via-cyan-700 to-pink-800 bg-clip-text text-transparent">
-              #{post.tag}
+              #{post.tag[0] === "#" ? post.tag.slice(1) : post.tag}
             </p>
           </div>
-          <div className="flex gap-x-3">
+          <div className="flex gap-x-3 w-full justify-end ">
             <CommentButton
               comments={comments?.length}
               postId={post.id}
