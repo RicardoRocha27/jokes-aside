@@ -5,14 +5,8 @@ interface UsePostCommentsModalStore {
   isOpen: boolean;
   post?: Post;
   comments: Comment[];
-  loggedUserId: string;
   profile?: Profile;
-  onOpen: (
-    comments: Comment[],
-    post: Post,
-    loggedUserId: string,
-    profile: Profile
-  ) => void;
+  onOpen: (comments: Comment[], post: Post, profile: Profile) => void;
   onClose: () => void;
 }
 
@@ -21,10 +15,9 @@ export const usePostCommentsModal = create<UsePostCommentsModalStore>(
     isOpen: false,
     post: undefined,
     comments: [],
-    loggedUserId: "",
     profile: undefined,
-    onOpen: (c, p, l, u) =>
-      set({ isOpen: true, comments: c, post: p, loggedUserId: l, profile: u }),
+    onOpen: (c, p, u) =>
+      set({ isOpen: true, comments: c, post: p, profile: u }),
     onClose: () => set({ isOpen: false }),
   })
 );

@@ -8,14 +8,13 @@ import { usePostCommentsModal } from "@/hooks/use-post-comments-modal";
 interface PostCommentsProps {
   post: Post;
   comments: Comment[];
-  loggedUserId: string;
   loggedUser: any;
 }
 
 const PostComments: React.FC<PostCommentsProps> = ({
   post,
   comments,
-  loggedUserId,
+
   loggedUser,
 }) => {
   const postCommentsModal = usePostCommentsModal();
@@ -26,7 +25,7 @@ const PostComments: React.FC<PostCommentsProps> = ({
         <p
           className="text-xs text-muted-foreground"
           onClick={() => {
-            postCommentsModal.onOpen(comments, post, loggedUserId, loggedUser);
+            postCommentsModal.onOpen(comments, post, loggedUser);
           }}
         >
           Check all comments
