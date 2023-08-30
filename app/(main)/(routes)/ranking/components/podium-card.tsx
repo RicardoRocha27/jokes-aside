@@ -11,7 +11,7 @@ interface PodiumCardProps {
 
 const PodiumCard: React.FC<PodiumCardProps> = ({ medal, profile }) => {
   return (
-    <Card className="w-full overflow-hidden break-words">
+    <Card className="w-full overflow-hidden">
       <CardHeader>
         <CardTitle>
           <Link
