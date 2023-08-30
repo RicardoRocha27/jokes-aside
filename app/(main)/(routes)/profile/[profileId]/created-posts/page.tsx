@@ -1,6 +1,8 @@
 import { getPosts } from "@/actions/get-posts";
 import PostList from "@/components/post-list";
 
+import NoPosts from "../components/no-posts";
+
 const CreatedPostsPage = async ({
   params,
 }: {
@@ -13,7 +15,11 @@ const CreatedPostsPage = async ({
 
   return (
     <>
-      <PostList initialData={posts} canEdit />
+      {posts.length !== 0 ? (
+        <PostList initialData={posts} canEdit />
+      ) : (
+        <NoPosts />
+      )}
     </>
   );
 };

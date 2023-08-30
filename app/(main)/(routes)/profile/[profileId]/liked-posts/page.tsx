@@ -1,6 +1,8 @@
 import { getPosts } from "@/actions/get-posts";
 import PostList from "@/components/post-list";
 
+import NoPosts from "../components/no-posts";
+
 const LikedPostsPage = async ({
   params,
 }: {
@@ -12,9 +14,7 @@ const LikedPostsPage = async ({
   });
 
   return (
-    <>
-      <PostList initialData={posts} />
-    </>
+    <>{posts.length !== 0 ? <PostList initialData={posts} /> : <NoPosts />}</>
   );
 };
 
