@@ -34,8 +34,8 @@ const RankingPage = async () => {
   return (
     <div>
       <Heading
-        title="Ruling the Humor Realm with Unrivaled Wit and Laughter"
-        description="Joke Monarchs and Royalty of Laughter in the Leading League"
+        title="Joke Monarchs and Royalty of Laughter in the Leading League"
+        description="Ruling the Humor Realm with Unrivaled Wit and Laughter"
       />
       <div className="my-5 ">
         <Podium sortedProfiles={sortedProfiles} />
