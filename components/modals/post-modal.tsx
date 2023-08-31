@@ -156,6 +156,7 @@ export const PostModal = () => {
                   disabled={isLoading}
                   variant="outline"
                   onClick={postModal.onClose}
+                  type="reset"
                 >
                   Cancel
                 </Button>

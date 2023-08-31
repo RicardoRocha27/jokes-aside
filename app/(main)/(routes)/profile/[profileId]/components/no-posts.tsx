@@ -1,5 +1,5 @@
 const NoPosts = () => {
-  return <p className="text-muted-foreground">No posts found.</p>;
+  return <p className="text-muted-foreground mb-10">No posts found.</p>;
 };
 
 export default NoPosts;
