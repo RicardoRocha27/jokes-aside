@@ -22,10 +22,13 @@ const Menu: React.FC<MenuProps> = ({ loggedUser }) => {
       <Button onClick={() => postModal.onOpen()}>Create Post</Button>
       <MobileMenu loggedUser={loggedUser} />
       <div className="hidden sm:flex items-center gap-x-4">
-        <Link href="/ranking">
+        <Link title="Ranking Page" href="/ranking">
           <Trophy />
         </Link>
-        <Link href={`/profile/${loggedUser.id}/created-posts`}>
+        <Link
+          title="Profile Page"
+          href={`/profile/${loggedUser.id}/created-posts`}
+        >
           <User2 />
         </Link>
         <ModeToggle />
