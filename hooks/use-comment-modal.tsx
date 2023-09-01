@@ -1,18 +1,19 @@
+import { Post } from "@prisma/client";
 import { create } from "zustand";
 
 interface UseCommentModalStore {
   isOpen: boolean;
   profileId: string;
-  postId: string;
-  onOpen: (profileId: string, postId: string) => void;
+  post?: Post;
+  onOpen: (profileId: string, post: Post) => void;
   onClose: () => void;
 }
 
 export const useCommentModal = create<UseCommentModalStore>((set) => ({
   profileId: "",
-  postId: "",
+  post: undefined,
   isOpen: false,
-  onOpen: (profileId, postId) =>
-    set({ isOpen: true, profileId: profileId, postId: postId }),
+  onOpen: (profileId, post) =>
+    set({ isOpen: true, profileId: profileId, post: post }),
   onClose: () => set({ isOpen: false }),
 }));

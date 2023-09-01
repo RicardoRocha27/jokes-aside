@@ -3,16 +3,17 @@
 import { MessageCircle } from "lucide-react";
 
 import { useCommentModal } from "@/hooks/use-comment-modal";
+import { Post } from "@prisma/client";
 
 interface CommentButtonProps {
   comments: number;
-  postId: string;
+  post: Post;
   profileId: string;
 }
 
 const CommentButton: React.FC<CommentButtonProps> = ({
   comments,
-  postId,
+  post,
   profileId,
 }) => {
   const commentModal = useCommentModal();
@@ -21,7 +22,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({
     <div className="flex flex-row items-center gap-x-2">
       <MessageCircle
         size={15}
-        onClick={() => commentModal.onOpen(profileId, postId)}
+        onClick={() => commentModal.onOpen(profileId, post)}
         className="cursor-pointer"
       />
       <p className="text-xs">

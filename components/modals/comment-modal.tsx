@@ -2,7 +2,6 @@ import * as z from "zod";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCommentModal } from "@/hooks/use-comment-modal";
@@ -17,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { NotificationType } from "@prisma/client";
 
 const formSchema = z.object({
   text: z.string().min(1, {
@@ -26,8 +26,7 @@ const formSchema = z.object({
 
 const CommentModal = () => {
   const commentModal = useCommentModal();
-  const router = useRouter();
-
+  const type: NotificationType = "COMMENT";
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,12 +39,20 @@ const CommentModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const profileId = commentModal.profileId;
-      const postId = commentModal.postId;
+      const post = commentModal.post;
 
       await axios.post("/api/comments", {
         text: values.text,
         profileId,
-        postId,
+        postId: post?.id,
+      });
+
+      await axios.post("/api/received-notifications", {
+        type,
+        senderId: profileId,
+        receiverId: post?.profileId,
+        postId: post?.id,
+        value: form.getValues().text,
       });
 
       commentModal.onClose();

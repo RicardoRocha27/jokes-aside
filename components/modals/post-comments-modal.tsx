@@ -12,6 +12,7 @@ import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { NotificationType } from "@prisma/client";
 
 const formSchema = z.object({
   text: z.string().min(1),
@@ -19,7 +20,7 @@ const formSchema = z.object({
 
 const PostCommentsModal = () => {
   const postCommentsModal = usePostCommentsModal();
-
+  const type: NotificationType = "COMMENT";
   const comments = postCommentsModal.comments;
   const post = postCommentsModal.post;
   const profile = postCommentsModal.profile;
@@ -39,6 +40,13 @@ const PostCommentsModal = () => {
         text: values.text,
         profileId: profile?.id,
         postId: post?.id,
+      });
+      await axios.post("/api/received-notifications", {
+        type,
+        senderId: profile?.id,
+        receiverId: post?.profileId,
+        postId: post?.id,
+        value: form.getValues().text,
       });
 
       postCommentsModal.onClose();

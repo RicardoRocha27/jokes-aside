@@ -59,7 +59,7 @@ const PostCard: React.FC<PostCardProps> = async ({
           <div className="flex gap-x-3 w-full justify-end ">
             <CommentButton
               comments={comments?.length}
-              postId={post.id}
+              post={post}
               profileId={loggedUser.id}
             />
             <HeartButton
