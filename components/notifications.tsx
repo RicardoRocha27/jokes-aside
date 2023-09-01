@@ -14,6 +14,7 @@ import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Trash } from "lucide-react";
 
 interface NotificationsProps {
   notifications: Notification[];
@@ -32,7 +33,10 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
       setIsActive(false);
     }
   };
-
+  const deleteNotification = async (id: string) => {
+    await axios.delete(`/api/received-notifications/${id}`);
+    router.refresh();
+  };
   const clearNotifications = async () => {
     await axios.delete("/api/received-notifications");
     router.refresh();
@@ -54,54 +58,62 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
           </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="flex flex-col p-2 gap-y-2">
+        <DropdownMenuGroup className="flex flex-col gap-y-2">
           {notifications.length === 0 && (
             <p className="text-muted-foreground text-sm">No notifications.</p>
           )}
           {notifications.map((notification, index) => (
             <div key={notification.id}>
-              <div className="flex items-center flex-2 gap-x-2">
-                <Image
-                  className="rounded-full"
-                  //@ts-ignore
-                  src={notification.sender.imageUrl}
-                  alt=""
-                  width={35}
-                  height={35}
-                />
-                <div>
-                  <p className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(notification.createdAt, {
-                      addSuffix: true,
-                    })}
-                  </p>
-                  {notification.type === "LIKE" ? (
-                    <p className="text-sm">
-                      {
-                        //@ts-ignore
-                        notification.sender.username
-                      }{" "}
-                      has liked your{" "}
-                      {
-                        //@ts-ignore
-                        notification.post.title
-                      }{" "}
-                      post.
+              <div className="flex items-center justify-between p-2 gap-x-2">
+                <div className="flex items-center gap-x-2">
+                  <Image
+                    className="flex rounded-full"
+                    //@ts-ignore
+                    src={notification.sender.imageUrl}
+                    alt=""
+                    width={35}
+                    height={35}
+                  />
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      {formatDistanceToNow(notification.createdAt, {
+                        addSuffix: true,
+                      })}
                     </p>
-                  ) : (
-                    <p className="text-sm">
-                      {
-                        //@ts-ignore
-                        notification.sender.username
-                      }{" "}
-                      has commented {`"${notification.value}"`} on your{" "}
-                      {
-                        //@ts-ignore
-                        notification.post.title
-                      }{" "}
-                      post.
-                    </p>
-                  )}
+                    {notification.type === "LIKE" ? (
+                      <p className="text-sm">
+                        {
+                          //@ts-ignore
+                          notification.sender.username
+                        }{" "}
+                        has liked your{" "}
+                        {
+                          //@ts-ignore
+                          notification.post.title
+                        }{" "}
+                        post.
+                      </p>
+                    ) : (
+                      <p className="text-sm">
+                        {
+                          //@ts-ignore
+                          notification.sender.username
+                        }{" "}
+                        has commented {`"${notification.value}"`} on your{" "}
+                        {
+                          //@ts-ignore
+                          notification.post.title
+                        }{" "}
+                        post.
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div
+                  onClick={() => deleteNotification(notification.id)}
+                  className="flex cursor-pointer"
+                >
+                  <Trash size={16} />
                 </div>
               </div>
               {index != notifications.length - 1 && <DropdownMenuSeparator />}
