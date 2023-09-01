@@ -14,7 +14,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       <Container>
         <Navbar />
         {children}
-        <div className="fixed flex items-center justify-center p-2 rounded-full shadow-md md:hidden bottom-10 left-10 bg-white dark:bg-slate-950 border border-slate-950/10 dark:border-white/10 h-10 w-10">
+        <div className="fixed flex items-center justify-center p-2 rounded-full shadow-md sm:hidden bottom-10 left-10 bg-white dark:bg-slate-950 border border-slate-950/10 dark:border-white/10 h-10 w-10">
           <Notifications notifications={loggedUser.receivedNotifications} />
         </div>
       </Container>
