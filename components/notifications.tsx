@@ -60,7 +60,9 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="flex flex-col gap-y-2">
           {notifications.length === 0 && (
-            <p className="text-muted-foreground text-sm">No notifications.</p>
+            <p className="text-muted-foreground text-sm px-2">
+              No notifications.
+            </p>
           )}
           {notifications.map((notification, index) => (
             <div key={notification.id}>
