@@ -64,7 +64,7 @@ const PostCard: React.FC<PostCardProps> = async ({
             />
             <HeartButton
               profileId={loggedUser.id}
-              postId={post.id}
+              post={post}
               likes={likes.length}
               like={like}
             />

@@ -4,19 +4,19 @@ import axios from "axios";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { toast } from "react-hot-toast";
-import { Like } from "@prisma/client";
+import { Like, NotificationType, Post } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
 interface HeartButtonProps {
   profileId: string;
-  postId: string;
+  post: Post;
   likes: number;
   like?: Like;
 }
 
 const HeartButton: React.FC<HeartButtonProps> = ({
   profileId,
-  postId,
+  post,
   likes,
   like,
 }) => {
@@ -25,11 +25,19 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const type: NotificationType = "LIKE";
+
   const handleLike = async () => {
     try {
       setIsLoading(true);
 
-      await axios.post(`/api/likes`, { profileId, postId });
+      await axios.post(`/api/likes`, { profileId, postId: post.id });
+      await axios.post("/api/received-notifications", {
+        type,
+        senderId: profileId,
+        receiverId: post.profileId,
+        postId: post.id,
+      });
 
       setHasLiked(true);
       setPostLikes(postLikes + 1);

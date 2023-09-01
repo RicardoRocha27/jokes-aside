@@ -2,7 +2,7 @@ import { Bell } from "lucide-react";
 import React from "react";
 
 interface NotificationButtonProps {
-  isActive?: boolean;
+  isActive: boolean;
 }
 
 const NotificationButton: React.FC<NotificationButtonProps> = ({

@@ -12,25 +12,36 @@ import {
 import { Notification } from "@prisma/client";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface NotificationsProps {
   notifications: Notification[];
 }
 
 const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
+  const router = useRouter();
   const activeNotifications = notifications.find(
     (notification) => notification.isActive
   );
   const [isActive, setIsActive] = useState(activeNotifications != undefined);
 
-  const setInactive = async () => {};
+  const setInactive = async () => {
+    if (activeNotifications) {
+      await axios.patch("/api/received-notifications", { isActive: false });
+      setIsActive(false);
+    }
+  };
 
-  const clearNotifications = async () => {};
+  const clearNotifications = async () => {
+    await axios.delete("/api/received-notifications");
+    router.refresh();
+  };
 
   return (
     <DropdownMenu onOpenChange={setInactive}>
       <DropdownMenuTrigger className="focus:outline-none">
-        <NotificationButton />
+        <NotificationButton isActive={isActive} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="relative sm:absolute bottom-2 sm:bottom-0  w-screen h-96 sm:w-96 sm:top-2 sm:right-0 overflow-y-auto">
         <DropdownMenuLabel className="flex items-center justify-between">
@@ -44,6 +55,9 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="flex flex-col p-2 gap-y-2">
+          {notifications.length === 0 && (
+            <p className="text-muted-foreground text-sm">No notifications.</p>
+          )}
           {notifications.map((notification, index) => (
             <div key={notification.id}>
               <div className="flex items-center flex-2 gap-x-2">
