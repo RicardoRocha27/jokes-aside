@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { Trophy, User2 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
-import { Profile } from "@prisma/client";
+import { Notification, Profile } from "@prisma/client";
 
 import MobileMenu from "@/components/navigation/mobile-menu";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { usePostModal } from "@/hooks/use-post-modal";
+import Notifications from "../notifications";
 
 interface MenuProps {
   loggedUser: Profile;
+  notifications: Notification[];
 }
 
-const Menu: React.FC<MenuProps> = ({ loggedUser }) => {
+const Menu: React.FC<MenuProps> = ({ loggedUser, notifications }) => {
   const postModal = usePostModal();
 
   return (
@@ -31,6 +33,7 @@ const Menu: React.FC<MenuProps> = ({ loggedUser }) => {
         >
           <User2 />
         </Link>
+        <Notifications notifications={notifications} />
         <ModeToggle />
         <UserButton afterSignOutUrl="/" />
       </div>
