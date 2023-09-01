@@ -12,6 +12,7 @@ Features:
 - Engage in conversations by posting comments on content.
 - Explore the profiles of fellow users to view their interactions.
 - View the leaderboard showcasing users with the most accumulated likes.
+- Users receive notifications about other user interaction with them.
 
 ### Prerequisites
 
