@@ -19,6 +19,8 @@ model Profile {
   createdPosts Post[]    @relation("createdPosts")
   likedPosts   Like[]
   comments     Comment[]
+  receivedNotifications Notification[] @relation("receivedNotifications")
+  sentNotifications Notification[] @relation("sentNotifications")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,6 +33,7 @@ model Post {
   tag         String
   likes       Like[]
   comments    Comment[]
+  notifications Notification[]
 
   profileId String
   profile   Profile @relation("createdPosts", fields: [profileId], references: [id], onDelete: Cascade)
@@ -66,4 +69,28 @@ model Comment {
 
   @@index([profileId])
   @@index([postId])
+}
+
+enum NotificationType {
+  LIKE 
+  COMMENT 
+}
+model Notification {
+  id String @id @default(uuid())
+  type NotificationType 
+  isActive Boolean
+  value String?
+
+  postId    String
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  receiverId String
+  receiver      Profile    @relation("receivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
+  senderId String
+  sender      Profile    @relation("sentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([postId])
+  @@index([receiverId])
+  @@index([senderId])
 }

@@ -12,6 +12,14 @@ export const currentProfile = async () => {
     where: {
       userId,
     },
+    include: {
+      receivedNotifications: {
+        include: {
+          post: true,
+          sender: true,
+        },
+      },
+    },
   });
 
   return profile;
