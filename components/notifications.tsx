@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Notification } from "@prisma/client";
+import { Notification, NotificationType } from "@prisma/client";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import axios from "axios";
@@ -26,6 +26,19 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
     (notification) => notification.isActive
   );
   const [isActive, setIsActive] = useState(activeNotifications != undefined);
+
+  const notificationText = (
+    username: string,
+    postTitle: string,
+    comment?: string,
+    type?: NotificationType
+  ) => {
+    if (type === "LIKE") {
+      return `${username} has liked your ${postTitle} post.`;
+    }
+
+    return `${username} has commented "${comment}" on your ${postTitle} post.`;
+  };
 
   const setInactive = async () => {
     if (activeNotifications) {
@@ -82,33 +95,17 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
                         addSuffix: true,
                       })}
                     </p>
-                    {notification.type === "LIKE" ? (
-                      <p className="text-sm">
-                        {
-                          //@ts-ignore
-                          notification.sender.username
-                        }{" "}
-                        has liked your{" "}
-                        {
-                          //@ts-ignore
-                          notification.post.title
-                        }{" "}
-                        post.
-                      </p>
-                    ) : (
-                      <p className="text-sm">
-                        {
-                          //@ts-ignore
-                          notification.sender.username
-                        }{" "}
-                        has commented {`"${notification.value}"`} on your{" "}
-                        {
-                          //@ts-ignore
-                          notification.post.title
-                        }{" "}
-                        post.
-                      </p>
-                    )}
+                    <p className="text-sm">
+                      {notificationText(
+                        //@ts-ignore
+                        notification.sender.username,
+                        //@ts-ignore
+                        notification.post.title,
+                        //@ts-ignore
+                        notification.value,
+                        notification.type
+                      )}
+                    </p>
                   </div>
                 </div>
                 <div
