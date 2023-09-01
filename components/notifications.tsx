@@ -29,7 +29,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
 
   return (
     <DropdownMenu onOpenChange={setInactive}>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="focus:outline-none">
         <NotificationButton />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="relative sm:absolute bottom-2 sm:bottom-0  w-screen h-96 sm:w-96 sm:top-2 sm:right-0 overflow-y-auto">
@@ -62,7 +62,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
                     })}
                   </p>
                   {notification.type === "LIKE" ? (
-                    <p>
+                    <p className="text-sm">
                       {
                         //@ts-ignore
                         notification.sender.username
@@ -75,7 +75,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
                       post.
                     </p>
                   ) : (
-                    <p>
+                    <p className="text-sm">
                       {
                         //@ts-ignore
                         notification.sender.username
