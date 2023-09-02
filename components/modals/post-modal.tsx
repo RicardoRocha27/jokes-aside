@@ -36,17 +36,17 @@ const formSchema = z.object({
 export const PostModal = () => {
   const postModal = usePostModal();
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
   useEffect(() => {
     if (postModal.initialData) {
       form.reset(postModal.initialData);
     } else {
       form.reset({ title: "", description: "", tag: "" });
     }
-  }, [postModal.initialData]);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-  });
+  }, [postModal.initialData, form]);
 
   const isLoading = form.formState.isSubmitting;
 

@@ -9,30 +9,31 @@ datasource db {
 }
 
 model Profile {
-  id       String  @id @default(uuid())
-  userId   String  @unique
-  name     String
-  username String?
-  email    String  @db.Text
-  imageUrl String  @db.Text
+  id          String  @id @default(uuid())
+  userId      String  @unique
+  name        String
+  username    String?
+  description String?
+  email       String  @db.Text
+  imageUrl    String  @db.Text
 
-  createdPosts Post[]    @relation("createdPosts")
-  likedPosts   Like[]
-  comments     Comment[]
+  createdPosts          Post[]         @relation("createdPosts")
+  likedPosts            Like[]
+  comments              Comment[]
   receivedNotifications Notification[] @relation("receivedNotifications")
-  sentNotifications Notification[] @relation("sentNotifications")
+  sentNotifications     Notification[] @relation("sentNotifications")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  title       String
-  description String    @db.Text
-  tag         String
-  likes       Like[]
-  comments    Comment[]
+  id            String         @id @default(uuid())
+  title         String
+  description   String         @db.Text
+  tag           String
+  likes         Like[]
+  comments      Comment[]
   notifications Notification[]
 
   profileId String
@@ -72,21 +73,22 @@ model Comment {
 }
 
 enum NotificationType {
-  LIKE 
-  COMMENT 
+  LIKE
+  COMMENT
 }
-model Notification {
-  id String @id @default(uuid())
-  type NotificationType 
-  isActive Boolean
-  value String?
 
-  postId    String
-  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+model Notification {
+  id       String           @id @default(uuid())
+  type     NotificationType
+  isActive Boolean
+  value    String?
+
+  postId     String
+  post       Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
   receiverId String
-  receiver      Profile    @relation("receivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
-  senderId String
-  sender      Profile    @relation("sentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver   Profile @relation("receivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
+  senderId   String
+  sender     Profile @relation("sentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 

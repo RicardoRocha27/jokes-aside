@@ -3,11 +3,13 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
 
-import { Heading } from "@/components/ui/heading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import ProfileTab from "./components/profile-tab";
 import { redirect } from "next/navigation";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import ProfileHeading from "./components/profile-heading";
 
 const ProfileLayout = async ({
   children,
@@ -41,14 +43,7 @@ const ProfileLayout = async ({
 
   return (
     <div>
-      <Heading
-        title={isUserProfile ? "My profile" : `${profile.username} profile`}
-        description={
-          isUserProfile
-            ? "Welcome to your profile page. Here you can check on your masterpiece."
-            : `Take a look and explore ${profile.username}'s jokes. Just don't laugh too hard, it would be awkward`
-        }
-      />
+      <ProfileHeading isUserProfile={isUserProfile} profile={profile} />
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-3 mt-5">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
