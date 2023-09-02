@@ -7,6 +7,7 @@ import { ModalProvider } from "@/providers/modal-provider";
 import { ToastProvider } from "@/providers/toast-provider";
 
 import "./globals.css";
+import RankingContextProvider from "@/contexts/ranking-context";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -25,15 +26,17 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={urbanist.className}>
-          <ModalProvider />
-          <ToastProvider />
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
+      <RankingContextProvider>
+        <html lang="en">
+          <body className={urbanist.className}>
+            <ModalProvider />
+            <ToastProvider />
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </body>
+        </html>
+      </RankingContextProvider>
     </ClerkProvider>
   );
 }

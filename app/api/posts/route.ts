@@ -47,3 +47,28 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error", { status: 500 });
   }
 }
+
+export async function GET() {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const posts = await db.post.findMany({
+      include: {
+        profile: true,
+        likes: true,
+      },
+      orderBy: {
+        likes: { _count: "desc" },
+      },
+    });
+
+    return NextResponse.json(posts);
+  } catch (error) {
+    console.log("[GET_POSTS]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}

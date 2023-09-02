@@ -5,13 +5,27 @@ import { cn } from "@/lib/utils";
 import { ProfileWithTotalLikes } from "@/types";
 
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Post } from "@prisma/client";
 
 interface PodiumCardProps {
+  isPosts: boolean;
   medal: string;
   profile: ProfileWithTotalLikes;
+  post: Post;
 }
 
-const PodiumCard: React.FC<PodiumCardProps> = ({ medal, profile }) => {
+const PodiumCard: React.FC<PodiumCardProps> = ({
+  medal,
+  profile,
+  post,
+  isPosts,
+}) => {
+  if (!post) {
+    return;
+  }
+  //@ts-ignore
+  const likes = isPosts ? post.likes.length : profile.totalLikes;
+
   return (
     <Card
       className={cn(
@@ -29,16 +43,33 @@ const PodiumCard: React.FC<PodiumCardProps> = ({ medal, profile }) => {
             href={`/profile/${profile.id}/created-posts`}
             className="flex flex-col items-center gap-y-2"
           >
-            <Image
-              src={profile.imageUrl}
-              alt=""
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
-            <p className="text-lg break-all text-center">{profile.username}</p>
+            {!isPosts && (
+              <Image
+                src={profile.imageUrl}
+                alt=""
+                width={50}
+                height={50}
+                className="rounded-full"
+              />
+            )}
+            <p className="text-lg break-all text-center">
+              {isPosts ? post.title : profile.username}
+            </p>
+            {isPosts && (
+              <div className="flex flex-col gap-y-2">
+                <p className="text-xs break-all text-center">
+                  {`"${post.description}"`}
+                </p>
+                <p className="text-xs break-all text-center text-muted-foreground">
+                  {
+                    //@ts-ignore
+                    post.profile.username
+                  }
+                </p>
+              </div>
+            )}
             <p className="text-sm">
-              {profile.totalLikes} {profile.totalLikes === 1 ? "like" : "likes"}
+              {likes} {likes === 1 ? "like" : "likes"}
             </p>
             <Medal color={medal} size={30} />
             <p className="text-xs text-muted-foreground">

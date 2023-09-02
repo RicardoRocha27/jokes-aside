@@ -2,14 +2,14 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-export type RankingColumn = {
+export type ProfileRankingColumn = {
   id: string;
   place: number;
   username: string;
   totalLikes: number;
 };
 
-export const columns: ColumnDef<RankingColumn>[] = [
+export const profileColumns: ColumnDef<ProfileRankingColumn>[] = [
   {
     accessorKey: "place",
     header: "Place",
