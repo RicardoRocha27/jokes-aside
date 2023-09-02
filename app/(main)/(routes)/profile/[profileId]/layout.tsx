@@ -7,6 +7,7 @@ import { Heading } from "@/components/ui/heading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import ProfileTab from "./components/profile-tab";
+import { redirect } from "next/navigation";
 
 const ProfileLayout = async ({
   children,
@@ -35,7 +36,7 @@ const ProfileLayout = async ({
   });
 
   if (!profile) {
-    return null;
+    redirect("/home");
   }
 
   return (
