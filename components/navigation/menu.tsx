@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { usePostModal } from "@/hooks/use-post-modal";
 import Notifications from "../notifications";
+import ProfileIcon from "../ui/profile-icon";
 
 interface MenuProps {
   loggedUser: Profile;
@@ -27,15 +28,9 @@ const Menu: React.FC<MenuProps> = ({ loggedUser, notifications }) => {
         <Link title="Ranking Page" href="/ranking">
           <Trophy />
         </Link>
-        <Link
-          title="Profile Page"
-          href={`/profile/${loggedUser.id}/created-posts`}
-        >
-          <User2 />
-        </Link>
         <Notifications notifications={notifications} />
         <ModeToggle />
-        <UserButton afterSignOutUrl="/" />
+        <ProfileIcon profile={loggedUser} />
       </div>
     </div>
   );
