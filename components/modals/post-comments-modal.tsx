@@ -41,13 +41,16 @@ const PostCommentsModal = () => {
         profileId: profile?.id,
         postId: post?.id,
       });
-      await axios.post("/api/received-notifications", {
-        type,
-        senderId: profile?.id,
-        receiverId: post?.profileId,
-        postId: post?.id,
-        value: form.getValues().text,
-      });
+
+      if (profile?.id !== post?.profileId) {
+        await axios.post("/api/received-notifications", {
+          type,
+          senderId: profile?.id,
+          receiverId: post?.profileId,
+          postId: post?.id,
+          value: form.getValues().text,
+        });
+      }
 
       postCommentsModal.onClose();
       toast.success("Comment added.");

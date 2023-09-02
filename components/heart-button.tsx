@@ -32,12 +32,15 @@ const HeartButton: React.FC<HeartButtonProps> = ({
       setIsLoading(true);
 
       await axios.post(`/api/likes`, { profileId, postId: post.id });
-      await axios.post("/api/received-notifications", {
-        type,
-        senderId: profileId,
-        receiverId: post.profileId,
-        postId: post.id,
-      });
+
+      if (profileId !== post.profileId) {
+        await axios.post("/api/received-notifications", {
+          type,
+          senderId: profileId,
+          receiverId: post.profileId,
+          postId: post.id,
+        });
+      }
 
       setHasLiked(true);
       setPostLikes(postLikes + 1);

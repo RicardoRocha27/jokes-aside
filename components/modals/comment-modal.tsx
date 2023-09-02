@@ -47,13 +47,15 @@ const CommentModal = () => {
         postId: post?.id,
       });
 
-      await axios.post("/api/received-notifications", {
-        type,
-        senderId: profileId,
-        receiverId: post?.profileId,
-        postId: post?.id,
-        value: form.getValues().text,
-      });
+      if (post?.profileId !== profileId) {
+        await axios.post("/api/received-notifications", {
+          type,
+          senderId: profileId,
+          receiverId: post?.profileId,
+          postId: post?.id,
+          value: form.getValues().text,
+        });
+      }
 
       commentModal.onClose();
       toast.success("Comment added.");

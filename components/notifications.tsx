@@ -22,6 +22,7 @@ interface NotificationsProps {
 
 const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
   const router = useRouter();
+
   const activeNotifications = notifications.find(
     (notification) => notification.isActive
   );
@@ -37,7 +38,13 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
       return `${username} has liked your ${postTitle} post.`;
     }
 
-    return `${username} has commented "${comment}" on your ${postTitle} post.`;
+    let formattedComment = comment;
+
+    if (comment!.length > 40) {
+      formattedComment = `${comment?.substring(0, 40)}... `;
+    }
+
+    return `${username} has commented "${formattedComment}" on your ${postTitle} post.`;
   };
 
   const setInactive = async () => {
@@ -46,10 +53,12 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
       setIsActive(false);
     }
   };
+
   const deleteNotification = async (id: string) => {
     await axios.delete(`/api/received-notifications/${id}`);
     router.refresh();
   };
+
   const clearNotifications = async () => {
     await axios.delete("/api/received-notifications");
     router.refresh();
