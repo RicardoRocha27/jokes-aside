@@ -59,7 +59,7 @@ const Comment: React.FC<CommentProps> = ({
         onConfirm={onDelete}
         loading={isLoading}
       />
-      <div className="flex justify-between items-center gap-x-2">
+      <div className="flex justify-between items-center gap-x-2 max-lg:">
         <div className="flex items-center gap-x-2">
           <Image
             src={profile.imageUrl}
@@ -87,7 +87,7 @@ const Comment: React.FC<CommentProps> = ({
         </div>
       </div>
       <div>
-        <p className={cn("text-sm", onCard && "text-xs mt-1")}>
+        <p className={cn("text-sm  break-all", onCard && "text-xs mt-1")}>
           {comment.text}
         </p>
       </div>

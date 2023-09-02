@@ -23,7 +23,10 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({ profile }) => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger onClick={() => setIsOpen(!isOpen)}>
+        <DropdownMenuTrigger
+          onClick={() => setIsOpen(!isOpen)}
+          className="focus:outline-none"
+        >
           <Image
             className="rounded-full"
             src={profile.imageUrl}
