@@ -37,7 +37,9 @@ const PodiumCard: React.FC<PodiumCardProps> = ({
       <CardHeader>
         <CardTitle>
           <Link
-            href={`/profile/${profile.id}/created-posts`}
+            href={`/profile/${
+              isPosts ? post.profileId : profile.id
+            }/created-posts`}
             className="flex flex-col items-center gap-y-2"
           >
             {!isPosts && (
