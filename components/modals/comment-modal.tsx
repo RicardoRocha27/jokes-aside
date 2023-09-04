@@ -66,12 +66,17 @@ const CommentModal = () => {
     }
   };
 
+  const handleClose = () => {
+    commentModal.onClose();
+    form.reset();
+  };
+
   return (
     <Modal
       title="Comment Post"
       description="Share your thoughts with the others"
       isOpen={commentModal.isOpen}
-      onClose={commentModal.onClose}
+      onClose={handleClose}
     >
       <div>
         <div className="space-y-4 py-2 pb-4">

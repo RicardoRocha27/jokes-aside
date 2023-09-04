@@ -61,12 +61,17 @@ const PostCommentsModal = () => {
     }
   };
 
+  const handleClose = () => {
+    postCommentsModal.onClose();
+    form.reset();
+  };
+
   return (
     <Modal
       title="Explore Comments"
       description="Discover a tapestry of user perspectives"
       isOpen={postCommentsModal.isOpen}
-      onClose={postCommentsModal.onClose}
+      onClose={handleClose}
     >
       <div className="max-h-72 overflow-y-auto">
         <div className="space-y-4 py-2 pb-4">
