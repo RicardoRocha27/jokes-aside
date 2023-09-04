@@ -9,24 +9,28 @@ import { Post, Profile } from "@prisma/client";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { RankingContext } from "@/contexts/ranking-context";
+import Loading from "./components/loading";
 
 const RankingPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProfiles = async () => {
+      setIsLoading(false);
       const response = await axios.get("/api/profiles");
       setProfiles(response.data);
     };
 
     const fetchPosts = async () => {
+      setIsLoading(true);
       const response = await axios.get("/api/posts");
       setPosts(response.data);
     };
 
-    fetchProfiles();
-    fetchPosts();
+    fetchProfiles().finally(() => setIsLoading(false));
+    fetchPosts().finally(() => setIsLoading(false));
   }, []);
 
   const profilesWithTotalLikes = profiles.map((profile) => {
@@ -50,16 +54,22 @@ const RankingPage = () => {
     <div>
       <RankingHeader />
       <div className="my-5 ">
-        <Podium
-          isPosts={isPosts}
-          sortedPosts={posts}
-          sortedProfiles={sortedProfiles}
-        />
-        <Table
-          isPosts={isPosts}
-          sortedPosts={posts.slice(3)}
-          sortedProfiles={sortedProfiles.slice(3)}
-        />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <Podium
+              isPosts={isPosts}
+              sortedPosts={posts}
+              sortedProfiles={sortedProfiles}
+            />
+            <Table
+              isPosts={isPosts}
+              sortedPosts={posts.slice(3)}
+              sortedProfiles={sortedProfiles.slice(3)}
+            />
+          </>
+        )}
       </div>
     </div>
   );
