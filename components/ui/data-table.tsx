@@ -26,11 +26,13 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isPosts: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isPosts,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const router = useRouter();
@@ -90,8 +92,11 @@ export function DataTable<TData, TValue>({
                   onClick={() =>
                     router.push(
                       `/profile/${
-                        //@ts-ignore
-                        row.getAllCells()[0].row.original.id
+                        isPosts
+                          ? //@ts-ignore
+                            row.getAllCells()[0].row.original.profileId
+                          : //@ts-ignore
+                            row.getAllCells()[0].row.original.id
                       }/created-posts`
                     )
                   }

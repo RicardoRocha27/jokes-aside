@@ -9,7 +9,7 @@ import { Post } from "@prisma/client";
 interface TablesProps {
   sortedProfiles: ProfileWithTotalLikes[];
   sortedPosts: Post[];
-  isPosts: Boolean;
+  isPosts: boolean;
 }
 
 const Table: React.FC<TablesProps> = ({
@@ -26,6 +26,7 @@ const Table: React.FC<TablesProps> = ({
 
   const formattedPosts = sortedPosts.map((item, index) => ({
     id: item.id,
+    profileId: item.profileId,
     place: index + 4,
     //@ts-ignore
     username: item.profile.username!,
@@ -40,6 +41,7 @@ const Table: React.FC<TablesProps> = ({
         //@ts-ignore
         columns={isPosts ? postColumns : profileColumns}
         data={isPosts ? formattedPosts : formattedProfiles}
+        isPosts={isPosts}
       />
     </div>
   );

@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 export type PostRankingColumn = {
   id: string;
+  profileId: string;
   place: number;
   username: string;
   title: string;
