@@ -54,7 +54,7 @@ const RankingPage = () => {
     <div>
       <RankingHeader />
       <div className="my-5 ">
-        {isLoading ? (
+        {isLoading || sortedProfiles.length === 0 || posts.length === 0 ? (
           <Loading />
         ) : (
           <>

@@ -14,10 +14,6 @@ const Podium: React.FC<PodiumProps> = ({
   sortedPosts,
   isPosts,
 }) => {
-  if (sortedProfiles.length === 0) {
-    return;
-  }
-
   return (
     <>
       <div className="hidden sm:flex justify-between gap-x-3 max-w-2xl mx-auto">

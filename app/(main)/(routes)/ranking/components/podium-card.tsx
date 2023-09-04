@@ -20,9 +20,6 @@ const PodiumCard: React.FC<PodiumCardProps> = ({
   post,
   isPosts,
 }) => {
-  if (!post) {
-    return;
-  }
   //@ts-ignore
   const likes = isPosts ? post.likes.length : profile.totalLikes;
 
