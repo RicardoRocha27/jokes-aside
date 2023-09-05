@@ -1,7 +1,6 @@
 # Jokes Aside - Social Platform for Humor Enthusiasts
 
-![jokes-aside](https://github.com/RicardoRocha27/jokes-aside/assets/133434333/9aae8eb0-1398-46e2-86c6-29fe4f975c74)
-
+![jokes-aside](https://github.com/RicardoRocha27/jokes-aside/assets/133434333/a266965b-f1b2-4c15-96e9-2323aa34b48c)
 
 Welcome to Jokes Aside, the social platform designed for humor enthusiasts. Here, you can engage with a community of like-minded individuals who appreciate a good laugh. Interact, react, and explore a world of humor!
 
