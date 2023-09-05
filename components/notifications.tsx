@@ -69,7 +69,10 @@ const Notifications: React.FC<NotificationsProps> = ({ notifications }) => {
       <DropdownMenuTrigger className="focus:outline-none">
         <NotificationButton isActive={isActive} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="relative sm:absolute bottom-2 sm:bottom-0  w-screen h-96 sm:w-96 sm:top-2 sm:right-0 overflow-y-auto">
+      <DropdownMenuContent
+        align="end"
+        className="relative mt-4  bottom-2 w-screen h-96 sm:w-96 overflow-y-auto"
+      >
         <DropdownMenuLabel className="flex items-center justify-between">
           <p>Notifications</p>
           <p

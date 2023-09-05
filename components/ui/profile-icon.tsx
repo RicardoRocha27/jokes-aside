@@ -36,7 +36,7 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({ profile }) => {
           />
         </DropdownMenuTrigger>
         {isOpen && (
-          <DropdownMenuContent className="w-96 p-6 absolute top-1 right-0">
+          <DropdownMenuContent align="end" className="w-96 p-6 mt-1">
             <DropdownMenuGroup>
               <div className="flex flex-col gap-y-6">
                 <div className="flex items-center gap-x-4">
