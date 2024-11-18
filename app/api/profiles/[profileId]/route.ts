@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { profileId: string } }
+  { params }: { params: Promise<{ profileId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -27,7 +27,7 @@ export async function PATCH(
 
     const profile = await db.profile.update({
       where: {
-        id: params.profileId,
+        id: (await params).profileId,
       },
       data: {
         description,

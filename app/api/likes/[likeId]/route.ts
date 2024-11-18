@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { likeId: string } }
+  { params }: { params: Promise<{ likeId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -13,13 +13,15 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!params.likeId) {
+    const p = await params;
+
+    if (p.likeId) {
       return new NextResponse("Like Id is required", { status: 400 });
     }
 
     const like = await db.like.deleteMany({
       where: {
-        id: params.likeId,
+        id: p.likeId,
       },
     });
 

@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { notificationId: string } }
+  { params }: { params: Promise<{ notificationId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -13,13 +13,15 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!params.notificationId) {
+    const p = await params;
+
+    if (!p.notificationId) {
       return new NextResponse("Notification Id is required", { status: 400 });
     }
 
     const notification = await db.notification.deleteMany({
       where: {
-        id: params.notificationId,
+        id: p.notificationId,
       },
     });
 

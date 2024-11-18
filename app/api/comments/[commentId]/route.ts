@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { commentId: string } }
+  { params }: { params: Promise<{ commentId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -20,7 +20,9 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!params.commentId) {
+    const p = await params;
+
+    if (!p.commentId) {
       return new NextResponse("Like Id is required", { status: 400 });
     }
 
@@ -28,7 +30,7 @@ export async function DELETE(
       where: {
         comments: {
           some: {
-            id: params.commentId,
+            id: p.commentId,
           },
         },
       },

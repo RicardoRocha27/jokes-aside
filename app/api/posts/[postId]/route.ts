@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { postId: string } }
+  { params }: { params: Promise<{ postId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -37,7 +37,7 @@ export async function PATCH(
 
     const post = await db.post.update({
       where: {
-        id: params.postId,
+        id: (await params).postId,
         profileId: user.id,
       },
       data: {
@@ -56,7 +56,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { postId: string } }
+  { params }: { params: Promise<{ postId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -73,7 +73,7 @@ export async function DELETE(
 
     const post = await db.post.delete({
       where: {
-        id: params.postId,
+        id: (await params).postId,
       },
     });
 
