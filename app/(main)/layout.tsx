@@ -2,12 +2,12 @@ import Navbar from "@/components/navigation/navbar";
 import Notifications from "@/components/notifications";
 import Container from "@/components/ui/container";
 import { currentProfile } from "@/lib/current-profile";
-import { redirectToSignIn } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const loggedUser = await currentProfile();
   if (!loggedUser) {
-    return redirectToSignIn();
+    return redirect("/sign-in");
   }
   return (
     <div className="w-full flex flex-col items-center">

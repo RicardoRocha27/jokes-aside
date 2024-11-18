@@ -1,5 +1,4 @@
 import { formatDistanceToNow } from "date-fns";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { currentProfile } from "@/lib/current-profile";
 import { Comment as CommentType, Like, Post, Profile } from "@prisma/client";
 
@@ -11,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import CommentButton from "@/components/comment-button";
 import PostComments from "@/components/post-comments";
 import Comment from "@/components/comment";
+import { redirect } from "next/navigation";
 
 interface PostCardProps {
   post: Post;
@@ -32,7 +32,7 @@ const PostCard: React.FC<PostCardProps> = async ({
   const loggedUser = await currentProfile();
 
   if (!loggedUser) {
-    return redirectToSignIn();
+    return redirect("/sign-in");
   }
 
   const like = likes.find((like) => like.profileId === loggedUser.id);

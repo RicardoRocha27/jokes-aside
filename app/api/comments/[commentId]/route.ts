@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: Request,
   { params }: { params: { commentId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -20,7 +20,9 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!params.commentId) {
+    const p = await params;
+
+    if (!p.commentId) {
       return new NextResponse("Like Id is required", { status: 400 });
     }
 
@@ -28,7 +30,7 @@ export async function DELETE(
       where: {
         comments: {
           some: {
-            id: params.commentId,
+            id: p.commentId,
           },
         },
       },
@@ -47,7 +49,7 @@ export async function DELETE(
 
     const isCommentOwner =
       post.comments.find((comment) => {
-        return comment.id === params.commentId;
+        return comment.id === p.commentId;
       })?.profileId === loggedUser.id;
 
     const isPostOwner = post.profileId === loggedUser.id;
@@ -58,7 +60,7 @@ export async function DELETE(
 
     const comment = await db.comment.delete({
       where: {
-        id: params.commentId,
+        id: p.commentId,
       },
     });
 

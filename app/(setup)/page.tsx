@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { redirectToSignIn } from "@clerk/nextjs";
 
 import { initialProfile } from "@/lib/initial-profile";
+import { RedirectToSignIn } from "@clerk/nextjs";
 
 const SetupPage = async () => {
   const profile = await initialProfile();
@@ -10,7 +10,7 @@ const SetupPage = async () => {
     redirect("/home");
   }
 
-  return redirectToSignIn;
+  return RedirectToSignIn;
 };
 
 export default SetupPage;

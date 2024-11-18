@@ -6,11 +6,11 @@ import NoPosts from "../components/no-posts";
 const LikedPostsPage = async ({
   params,
 }: {
-  params: { profileId: string };
+  params: Promise<{ profileId: string }>;
 }) => {
   const posts = await getPosts({
     likedPosts: true,
-    profileId: params.profileId,
+    profileId: (await params).profileId,
   });
 
   return (

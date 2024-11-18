@@ -1,5 +1,4 @@
 import { Heart, MessageSquare, PencilRuler } from "lucide-react";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
 
@@ -7,8 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import ProfileTab from "./components/profile-tab";
 import { redirect } from "next/navigation";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
 import ProfileHeading from "./components/profile-heading";
 
 const ProfileLayout = async ({
@@ -16,19 +13,19 @@ const ProfileLayout = async ({
   params,
 }: {
   children: string;
-  params: { profileId: string };
+  params: Promise<{ profileId: string }>;
 }) => {
   const loggedUser = await currentProfile();
 
   if (!loggedUser) {
-    return redirectToSignIn();
+    return redirect("/sign-in");
   }
 
-  const isUserProfile = loggedUser.id === params.profileId;
+  const isUserProfile = loggedUser.id === (await params).profileId;
 
   const profile = await db.profile.findUnique({
     where: {
-      id: params.profileId,
+      id: (await params).profileId,
     },
     include: {
       createdPosts: true,

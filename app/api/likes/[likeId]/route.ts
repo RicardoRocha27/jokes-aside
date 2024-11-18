@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
 
 export async function DELETE(
   req: Request,
   { params }: { params: { likeId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });

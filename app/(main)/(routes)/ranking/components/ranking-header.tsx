@@ -10,7 +10,7 @@ const RankingHeader = () => {
         title="Joke Monarchs and Royalty of Laughter in the Leading League"
         description="Ruling the Humor Realm with Unrivaled Wit and Laughter"
       />
-      <Combobox />
+      {/* <Combobox /> */}
     </div>
   );
 };

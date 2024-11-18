@@ -6,13 +6,13 @@ import Menu from "./menu";
 import LogoImage from "@/public/logo.png";
 import { currentProfile } from "@/lib/current-profile";
 import { Profile } from "@prisma/client";
-import { redirectToSignIn } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const Navbar = async () => {
   const loggedUser = await currentProfile();
 
   if (!loggedUser) {
-    return redirectToSignIn();
+    return redirect("/sign-in");
   }
 
   return (

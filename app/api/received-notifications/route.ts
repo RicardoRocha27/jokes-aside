@@ -1,11 +1,11 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     const { type, senderId, receiverId, postId, value } = await req.json();
 
     if (!userId) {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     const loggedUser = await currentProfile();
 
     if (!userId || !loggedUser) {
@@ -66,7 +66,7 @@ export async function DELETE(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     const loggedUser = await currentProfile();
     const { isActive } = await req.json();
 
