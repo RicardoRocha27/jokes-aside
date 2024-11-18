@@ -20,9 +20,7 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const p = await params;
-
-    if (!p.commentId) {
+    if (!params.commentId) {
       return new NextResponse("Like Id is required", { status: 400 });
     }
 
@@ -30,7 +28,7 @@ export async function DELETE(
       where: {
         comments: {
           some: {
-            id: p.commentId,
+            id: params.commentId,
           },
         },
       },
